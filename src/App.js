@@ -45,7 +45,6 @@ const ENTITY_TYPE = [
 ];
 //this is under assumption all characters are in upper case
 const App = () => {
-  console.log();
   const [text, setText] = useState("");
   const [result, setResult] = useState("");
   const submittingForm = (message) => {

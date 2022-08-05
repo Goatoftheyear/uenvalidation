@@ -1,13 +1,14 @@
-# Before you start
+# UENvalidator
 
-## Install these packages
+## Before you start
 
-npm install jest-watch-typeahead@0.6.5 @mui/material
+git clone https://github.com/Goatoftheyear/uenvalidation.git
+run: npm install
 
-# To Start
+## To Start
 
-npm start
+run: npm start
 
-# To Test
+## To Test
 
-npm test
+run: npm test and press a
