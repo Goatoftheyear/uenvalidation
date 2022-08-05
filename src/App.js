@@ -43,7 +43,9 @@ const ENTITY_TYPE = [
   "GA",
   "GB",
 ];
+//this is under assumption all characters are in upper case
 const App = () => {
+  console.log();
   const [text, setText] = useState("");
   const [result, setResult] = useState("");
   const submittingForm = (message) => {
@@ -52,21 +54,26 @@ const App = () => {
       setResult("Please enter your UEN");
       return;
     }
-    if (
-      message.length < 9 ||
-      message.length > 10 ||
-      /[a-zA-Z]$/.test(message) === false
-    ) {
+    if (message.length < 9 || message.length > 10) {
       setResult("This UEN has invalid length");
       return;
     }
+    //check for correct format, while under the entity type and
+    //check for UEN not over current year
     if (
       /[TSR][0-9]{2}[A-Z]{2}[0-9]{4}[A-Z]/.test(message) &&
-      ENTITY_TYPE.includes(message.substring(3, 5))
+      ENTITY_TYPE.includes(message.substring(3, 5)) &&
+      !(
+        message.charAt(0) === "T" &&
+        parseInt(message.substring(1, 3)) >
+          new Date().getFullYear() %
+            Math.pow(10, new Date().getFullYear().toString().length - 1)
+      )
     ) {
-      //add the list of entities later
       setResult("This UEN is under other entities");
-    } else if (
+    }
+    //check for format check for UEN not over current year
+    else if (
       /[0-9]{9}[A-Z]$/.test(message) &&
       parseInt(message.substring(0, 4)) > 1800 &&
       parseInt(message.substring(0, 4)) <= new Date().getFullYear()
@@ -110,15 +117,3 @@ const App = () => {
 };
 
 export default App;
-// legacy
-
-{
-  /* <input
-type="text"
-name="uen"
-onChange={(e) => {
-  setText(e.target.value);
-}}
-/>
-        <button onClick={(e) => submittingForm(text)}>Submit</button> */
-}
