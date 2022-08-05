@@ -1,6 +1,6 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
+import Button from "@mui/material/Button";
 
 const ENTITY_TYPE = [
   "LP",
@@ -47,6 +47,11 @@ const App = () => {
   const [text, setText] = useState("");
   const [result, setResult] = useState("");
   const submittingForm = (message) => {
+    setResult("Loading...");
+    if (!message.length) {
+      setResult("Please enter your UEN");
+      return;
+    }
     if (
       message.length < 9 ||
       message.length > 10 ||
@@ -60,37 +65,60 @@ const App = () => {
       ENTITY_TYPE.includes(message.substring(3, 5))
     ) {
       //add the list of entities later
-      setResult("This is under other entities");
+      setResult("This UEN is under other entities");
     } else if (
       /[0-9]{9}[A-Z]$/.test(message) &&
       parseInt(message.substring(0, 4)) > 1800 &&
       parseInt(message.substring(0, 4)) <= new Date().getFullYear()
     ) {
-      setResult("Local companies registered with ACRA");
+      setResult("This UEN is under local companies registered with ACRA");
     } else if (/[0-9]{8}[A-Z]$/.test(message) && message.length === 9) {
-      setResult("Businesses registered with ACRA");
+      setResult("This UEN is under businesses registered with ACRA");
     } else {
       setResult("This UEN is invalid");
+    }
+  };
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      submittingForm(text);
     }
   };
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Type in your UEN to check if it is valid</h1>
-        <input
-          type="text"
-          name="uen"
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-        />
+        <h1>UEN Validator</h1>
+        <h2>Type in your UEN to check if it is valid</h2>
+        <div>
+          <input
+            className="text-size"
+            type="text"
+            name="uen"
+            onChange={(e) => {
+              setText(e.target.value);
+            }}
+            onKeyDown={(e) => onKeyDown(e)}
+          />
+        </div>
+        <Button onClick={(e) => submittingForm(text)} variant="contained">
+          Validate
+        </Button>
         <br />
-        <button onClick={(e) => submittingForm(text)}>Submit</button>
-        <br />
-        <h2>{result}</h2>
+        <p className="result">{result}</p>
       </header>
     </div>
   );
 };
 
 export default App;
+// legacy
+
+{
+  /* <input
+type="text"
+name="uen"
+onChange={(e) => {
+  setText(e.target.value);
+}}
+/>
+        <button onClick={(e) => submittingForm(text)}>Submit</button> */
+}
