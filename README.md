@@ -4,12 +4,12 @@
 
 git clone https://github.com/Goatoftheyear/uenvalidation.git  
 cd uenvalidation  
-run: npm install
+npm install
 
 ## To Start
 
-run: npm start
+npm start
 
 ## To Test
 
-run: npm test and press a
+npm test and press a
