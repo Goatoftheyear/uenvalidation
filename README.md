@@ -3,6 +3,7 @@
 ## Before you start
 
 git clone https://github.com/Goatoftheyear/uenvalidation.git
+cd uenvalidation
 run: npm install
 
 ## To Start
